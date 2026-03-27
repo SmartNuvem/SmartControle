@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Segoe UI", "Poppins", "Trebuchet MS", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top right, #d8f5e7, #f8fafc 40%);
+  color: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}

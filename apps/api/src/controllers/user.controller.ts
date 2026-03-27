@@ -1,0 +1,123 @@
+﻿import type { Request, Response } from "express";
+import bcrypt from "bcryptjs";
+import { Role } from "@prisma/client";
+import { z } from "zod";
+import { prisma } from "../prisma.js";
+
+const userSchema = z.object({
+  name: z.string().min(2),
+  username: z.string().min(3),
+  password: z.string().min(6).optional(),
+  role: z.nativeEnum(Role),
+  active: z.boolean().optional(),
+});
+
+export async function listUsers(_req: Request, res: Response) {
+  const users = await prisma.user.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      name: true,
+      username: true,
+      role: true,
+      active: true,
+      createdAt: true,
+    },
+  });
+
+  return res.json(users);
+}
+
+export async function createUser(req: Request, res: Response) {
+  const parse = userSchema.safeParse(req.body);
+  if (!parse.success || !parse.data.password) {
+    return res.status(400).json({ message: "Dados inválidos. Senha é obrigatória." });
+  }
+
+  const existing = await prisma.user.findUnique({ where: { username: parse.data.username } });
+  if (existing) {
+    return res.status(409).json({ message: "Usuário já cadastrado." });
+  }
+
+  const password = await bcrypt.hash(parse.data.password, 10);
+
+  const user = await prisma.user.create({
+    data: {
+      name: parse.data.name,
+      username: parse.data.username,
+      password,
+      role: parse.data.role,
+      active: parse.data.active ?? true,
+    },
+    select: {
+      id: true,
+      name: true,
+      username: true,
+      role: true,
+      active: true,
+      createdAt: true,
+    },
+  });
+
+  return res.status(201).json(user);
+}
+
+export async function updateUser(req: Request, res: Response) {
+  const parse = userSchema.partial().safeParse(req.body);
+  if (!parse.success) {
+    return res.status(400).json({ message: "Dados inválidos para atualizar usuário." });
+  }
+
+  const { id } = req.params;
+
+  const current = await prisma.user.findUnique({ where: { id } });
+  if (!current) {
+    return res.status(404).json({ message: "Usuário não encontrado." });
+  }
+
+  const data: {
+    name?: string;
+    username?: string;
+    password?: string;
+    role?: Role;
+    active?: boolean;
+  } = {
+    name: parse.data.name,
+    username: parse.data.username,
+    role: parse.data.role,
+    active: parse.data.active,
+  };
+
+  if (parse.data.password) {
+    data.password = await bcrypt.hash(parse.data.password, 10);
+  }
+
+  const user = await prisma.user.update({
+    where: { id },
+    data,
+    select: {
+      id: true,
+      name: true,
+      username: true,
+      role: true,
+      active: true,
+      createdAt: true,
+    },
+  });
+
+  return res.json(user);
+}
+
+export async function deleteUser(req: Request, res: Response) {
+  const { id } = req.params;
+
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) {
+    return res.status(404).json({ message: "Usuário não encontrado." });
+  }
+
+  await prisma.user.delete({ where: { id } });
+  return res.status(204).send();
+}
+
+
