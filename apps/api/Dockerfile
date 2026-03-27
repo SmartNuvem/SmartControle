@@ -10,5 +10,5 @@ RUN npm run prisma:generate -w apps/api
 RUN npm run build -w apps/api
 
 EXPOSE 3333
-CMD ["sh", "-c", "cd apps/api && npx prisma migrate deploy && npm run db:seed && npm run start"]
+CMD ["sh", "-c", "cd apps/api && npx prisma db push && npm run db:seed && npm run start"]
 

@@ -1,5 +1,5 @@
-﻿import type { Request, Response } from "express";
-import { Prisma } from "@prisma/client";
+﻿import { Prisma } from "@prisma/client";
+import type { Request, Response } from "express";
 import { stringify } from "csv-stringify/sync";
 import { prisma } from "../prisma.js";
 import { config } from "../config.js";
@@ -70,7 +70,10 @@ export async function getDashboard(_req: Request, res: Response) {
       totalSales: row._sum.totalPrice ?? 0,
       salesCount: row._count.id,
     })),
-    lastSales,
+    lastSales: lastSales.map((sale) => ({
+      ...sale,
+      product: sale.product ?? { name: sale.productName },
+    })),
   });
 }
 
@@ -102,9 +105,9 @@ export async function salesReport(req: Request, res: Response) {
         data: sale.createdAt.toISOString(),
         vendedor: sale.seller.name,
         usuario: sale.seller.username,
-        produto: sale.product.name,
-        sku: sale.product.sku || "",
-        categoria: sale.product.category || "",
+        produto: sale.product?.name || sale.productName,
+        sku: sale.product?.sku || sale.productSku || "",
+        categoria: sale.product?.category || "",
         quantidade: sale.quantity,
         valor_unitario: sale.unitPrice,
         valor_total: sale.totalPrice,
@@ -117,7 +120,12 @@ export async function salesReport(req: Request, res: Response) {
     return res.send(csv);
   }
 
-  return res.json(sales);
+  return res.json(
+    sales.map((sale) => ({
+      ...sale,
+      product: sale.product ?? { id: sale.productId, name: sale.productName, sku: sale.productSku },
+    })),
+  );
 }
 
 export async function stockReport(_req: Request, res: Response) {
@@ -135,9 +143,11 @@ export async function movementReport(_req: Request, res: Response) {
     },
     orderBy: { createdAt: "desc" },
   });
-  return res.json(movements);
+
+  return res.json(
+    movements.map((move) => ({
+      ...move,
+      product: move.product ?? { id: move.productId, name: move.productName, sku: null },
+    })),
+  );
 }
-
-
-
-

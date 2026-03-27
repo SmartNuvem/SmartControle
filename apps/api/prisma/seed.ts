@@ -104,6 +104,7 @@ async function main() {
       await prisma.stockMovement.create({
         data: {
           productId: created.id,
+          productName: created.name,
           userId: admin.id,
           type: "ENTRY",
           quantity: product.stockQty,
@@ -124,4 +125,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-

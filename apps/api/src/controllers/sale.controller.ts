@@ -42,6 +42,8 @@ export async function createSale(req: Request, res: Response) {
       const createdSale = await tx.sale.create({
         data: {
           productId,
+          productName: product.name,
+          productSku: product.sku,
           sellerId: req.user!.id,
           quantity,
           unitPrice,
@@ -56,6 +58,7 @@ export async function createSale(req: Request, res: Response) {
       await tx.stockMovement.create({
         data: {
           productId,
+          productName: product.name,
           userId: req.user!.id,
           type: "SALE",
           quantity: -quantity,
@@ -66,7 +69,10 @@ export async function createSale(req: Request, res: Response) {
       return createdSale;
     });
 
-    return res.status(201).json(sale);
+    return res.status(201).json({
+      ...sale,
+      product: sale.product ?? { id: sale.productId, name: sale.productName },
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Erro ao registrar venda.";
     return res.status(400).json({ message });
@@ -94,9 +100,10 @@ export async function listSales(req: Request, res: Response) {
     orderBy: { createdAt: "desc" },
   });
 
-  return res.json(sales);
+  return res.json(
+    sales.map((sale) => ({
+      ...sale,
+      product: sale.product ?? { id: sale.productId, name: sale.productName },
+    })),
+  );
 }
-
-
-
-

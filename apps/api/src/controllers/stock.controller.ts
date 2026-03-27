@@ -36,6 +36,7 @@ export async function stockEntry(req: Request, res: Response) {
     await tx.stockMovement.create({
       data: {
         productId,
+        productName: product.name,
         userId: req.user!.id,
         type: "ENTRY",
         quantity,
@@ -71,6 +72,7 @@ export async function stockAdjustment(req: Request, res: Response) {
     await tx.stockMovement.create({
       data: {
         productId,
+        productName: product.name,
         userId: req.user!.id,
         type: "ADJUSTMENT",
         quantity: diff,
@@ -91,9 +93,10 @@ export async function listMovements(_req: Request, res: Response) {
     orderBy: { createdAt: "desc" },
   });
 
-  return res.json(movements);
+  return res.json(
+    movements.map((move) => ({
+      ...move,
+      product: move.product ?? { id: move.productId, name: move.productName },
+    })),
+  );
 }
-
-
-
-
