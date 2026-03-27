@@ -3,5 +3,7 @@ export function money(value: number) {
 }
 
 export function dateTime(value: string) {
-  return new Date(value).toLocaleString("pt-BR");
+  return new Date(value).toLocaleString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+  });
 }
