@@ -106,11 +106,11 @@ export function ProductsPage() {
   async function removeProduct(id: string) {
     if (!window.confirm("Deseja realmente excluir este produto?")) return;
     try {
-      await api.delete(`/products/${id}`);
-      success("Produto excluido com sucesso.");
+      const response = await api.delete(`/products/${id}`);
+      success(response.data?.message || "Produto excluido com sucesso.");
       await loadProducts();
-    } catch {
-      error("nao foi possivel excluir o produto.");
+    } catch (e: any) {
+      error(e?.response?.data?.message || "nao foi possivel excluir o produto.");
     }
   }
 

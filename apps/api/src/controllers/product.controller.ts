@@ -1,4 +1,5 @@
-﻿import type { Request, Response } from "express";
+﻿import { Prisma } from "@prisma/client";
+import type { Request, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../prisma.js";
 import { parseBool } from "../utils/helpers.js";
@@ -127,10 +128,22 @@ export async function deleteProduct(req: Request, res: Response) {
     return res.status(404).json({ message: "Produto nao encontrado." });
   }
 
-  await prisma.product.delete({ where: { id } });
-  return res.status(204).send();
+  try {
+    await prisma.product.delete({ where: { id } });
+    return res.status(204).send();
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2003") {
+      const inactivatedProduct = await prisma.product.update({
+        where: { id },
+        data: { active: false },
+      });
+
+      return res.status(200).json({
+        message: "Produto com vendas vinculadas nao pode ser excluido. Produto inativado com sucesso.",
+        product: inactivatedProduct,
+      });
+    }
+
+    return res.status(500).json({ message: "Nao foi possivel excluir o produto." });
+  }
 }
-
-
-
-
