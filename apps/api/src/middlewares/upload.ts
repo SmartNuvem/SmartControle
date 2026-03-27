@@ -1,4 +1,4 @@
-import multer from "multer";
+ï»¿import multer from "multer";
 import path from "node:path";
 import fs from "node:fs";
 
@@ -22,9 +22,11 @@ export const upload = multer({
     if (file.mimetype.startsWith("image/")) {
       cb(null, true);
     } else {
-      cb(new Error("Apenas imagens são permitidas."));
+      cb(new Error("Apenas imagens sao permitidas."));
     }
   },
   limits: { fileSize: 5 * 1024 * 1024 },
 });
+
+
 

@@ -1,4 +1,4 @@
-export function formatCurrency(value: number): string {
+﻿export function formatCurrency(value: number): string {
   return value.toFixed(2);
 }
 
@@ -13,4 +13,6 @@ export function parseBool(value?: string): boolean | undefined {
   if (value === "false") return false;
   return undefined;
 }
+
+
 

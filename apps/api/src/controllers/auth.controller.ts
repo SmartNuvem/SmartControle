@@ -14,19 +14,19 @@ export async function login(req: Request, res: Response) {
   const parse = loginSchema.safeParse(req.body);
 
   if (!parse.success) {
-    return res.status(400).json({ message: "Informe usuário e senha." });
+    return res.status(400).json({ message: "Informe Usuario e senha." });
   }
 
   const { username, password } = parse.data;
 
   const user = await prisma.user.findUnique({ where: { username } });
   if (!user || !user.active) {
-    return res.status(401).json({ message: "Usuário ou senha inválidos." });
+    return res.status(401).json({ message: "Usuario ou senha invalidos." });
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) {
-    return res.status(401).json({ message: "Usuário ou senha inválidos." });
+    return res.status(401).json({ message: "Usuario ou senha invalidos." });
   }
 
   const token = jwt.sign({ sub: user.id, role: user.role }, config.jwtSecret, {
@@ -47,6 +47,8 @@ export async function login(req: Request, res: Response) {
 export async function me(req: Request, res: Response) {
   return res.json({ user: req.user! });
 }
+
+
 
 
 

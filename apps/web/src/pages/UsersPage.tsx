@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+ï»¿import { FormEvent, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useToast } from "../contexts/ToastContext";
 
@@ -36,11 +36,11 @@ export function UsersPage() {
     event.preventDefault();
     try {
       await api.post("/users", form);
-      success("Usuário criado com sucesso.");
+      success("Usuario criado com sucesso.");
       setForm(initialUser);
       await loadUsers();
     } catch {
-      error("Falha ao criar usuário.");
+      error("Falha ao criar Usuario.");
     }
   }
 
@@ -50,7 +50,7 @@ export function UsersPage() {
       success("Status atualizado.");
       await loadUsers();
     } catch {
-      error("Não foi possível atualizar usuário.");
+      error("nao foi possivel atualizar Usuario.");
     }
   }
 
@@ -58,20 +58,20 @@ export function UsersPage() {
     if (!window.confirm(`Excluir ${user.name}?`)) return;
     try {
       await api.delete(`/users/${user.id}`);
-      success("Usuário removido.");
+      success("Usuario removido.");
       await loadUsers();
     } catch {
-      error("Não foi possível remover usuário.");
+      error("nao foi possivel remover Usuario.");
     }
   }
 
   return (
     <div className="space-y-4 pb-16 md:pb-0">
-      <h2 className="text-2xl font-bold">Usuários</h2>
+      <h2 className="text-2xl font-bold">Usuarios</h2>
 
       <form onSubmit={submitUser} className="grid gap-2 rounded-xl border border-slate-200 p-4 md:grid-cols-5">
         <input className="rounded-lg border px-3 py-2" placeholder="Nome" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-        <input className="rounded-lg border px-3 py-2" placeholder="Usuário" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} required />
+        <input className="rounded-lg border px-3 py-2" placeholder="Usuario" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} required />
         <input className="rounded-lg border px-3 py-2" type="password" placeholder="Senha" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
         <select className="rounded-lg border px-3 py-2" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value as "ADMIN" | "SELLER" })}>
           <option value="SELLER">Vendedor</option>
@@ -85,7 +85,7 @@ export function UsersPage() {
           <div key={user.id} className="flex flex-col gap-2 rounded-xl border border-slate-200 p-3 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="font-semibold">{user.name}</p>
-              <p className="text-sm text-slate-600">{user.username} • {user.role}</p>
+              <p className="text-sm text-slate-600">{user.username}  -  {user.role}</p>
             </div>
             <div className="flex gap-2">
               <button className="rounded-lg bg-slate-800 px-3 py-2 text-white" onClick={() => toggleActive(user)}>
@@ -101,3 +101,5 @@ export function UsersPage() {
     </div>
   );
 }
+
+

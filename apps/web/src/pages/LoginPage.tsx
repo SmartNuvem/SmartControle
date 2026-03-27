@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+ï»¿import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
@@ -18,7 +18,7 @@ export function LoginPage() {
       await login(username, password);
       navigate("/", { replace: true });
     } catch {
-      error("Falha no login. Verifique usuário e senha.");
+      error("Falha no login. Verifique Usuario e senha.");
     } finally {
       setLoading(false);
     }
@@ -32,7 +32,7 @@ export function LoginPage() {
 
         <div className="mt-6 space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-semibold text-slate-700">Usuário</label>
+            <label className="mb-1 block text-sm font-semibold text-slate-700">Usuario</label>
             <input
               className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-brand-500 focus:outline-none"
               value={username}
@@ -63,3 +63,5 @@ export function LoginPage() {
     </div>
   );
 }
+
+

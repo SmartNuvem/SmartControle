@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+ï»¿import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import type { Sale } from "../types";
 import { dateTime, money } from "../lib/format";
@@ -12,7 +12,7 @@ export function SalesHistoryPage() {
 
   return (
     <div className="space-y-4 pb-16 md:pb-0">
-      <h2 className="text-2xl font-bold">Histórico de vendas</h2>
+      <h2 className="text-2xl font-bold">Historico de vendas</h2>
 
       <div className="hidden overflow-hidden rounded-xl border border-slate-200 md:block">
         <table className="w-full text-sm">
@@ -46,7 +46,7 @@ export function SalesHistoryPage() {
             <p className="text-sm text-slate-600">{dateTime(sale.createdAt)}</p>
             <p className="text-sm text-slate-600">{sale.seller.name}</p>
             <p className="text-sm font-semibold">
-              {sale.quantity} un • {money(sale.totalPrice)}
+              {sale.quantity} un  -  {money(sale.totalPrice)}
             </p>
           </div>
         ))}
@@ -54,3 +54,5 @@ export function SalesHistoryPage() {
     </div>
   );
 }
+
+

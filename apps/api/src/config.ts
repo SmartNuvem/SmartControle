@@ -1,4 +1,4 @@
-import dotenv from "dotenv";
+﻿import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -9,4 +9,6 @@ export const config = {
   corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173",
   lowStockThreshold: 10,
 };
+
+
 

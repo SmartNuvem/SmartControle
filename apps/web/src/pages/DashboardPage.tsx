@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+ï»¿import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import { money, dateTime } from "../lib/format";
 
@@ -30,7 +30,7 @@ export function DashboardPage() {
         <Card title="Total em estoque" value={String(data.totalStock)} />
         <Card title="Estoque baixo" value={String(data.lowStock.length)} />
         <Card title="Vendas hoje" value={money(data.salesToday)} />
-        <Card title="Vendas mês" value={money(data.salesMonth)} />
+        <Card title="Vendas mes" value={money(data.salesMonth)} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -41,22 +41,22 @@ export function DashboardPage() {
               <div key={item.sellerId} className="rounded-lg bg-slate-50 p-3">
                 <p className="font-semibold">{item.sellerName}</p>
                 <p className="text-sm text-slate-600">
-                  {item.salesCount} vendas • {money(item.totalSales)}
+                  {item.salesCount} vendas  -  {money(item.totalSales)}
                 </p>
               </div>
             ))}
-            {data.ranking.length === 0 && <p className="text-sm text-slate-500">Sem vendas no período.</p>}
+            {data.ranking.length === 0 && <p className="text-sm text-slate-500">Sem vendas no periodo.</p>}
           </div>
         </section>
 
         <section className="rounded-xl border border-slate-200 p-4">
-          <h3 className="mb-3 text-lg font-semibold">Últimas vendas</h3>
+          <h3 className="mb-3 text-lg font-semibold">Ultimas vendas</h3>
           <div className="space-y-2">
             {data.lastSales.map((sale) => (
               <div key={sale.id} className="rounded-lg bg-slate-50 p-3">
                 <p className="font-semibold">{sale.product.name}</p>
                 <p className="text-sm text-slate-600">
-                  {sale.seller.name} • {money(sale.totalPrice)} • {dateTime(sale.createdAt)}
+                  {sale.seller.name}  -  {money(sale.totalPrice)}  -  {dateTime(sale.createdAt)}
                 </p>
               </div>
             ))}
@@ -76,3 +76,5 @@ function Card({ title, value }: { title: string; value: string }) {
     </div>
   );
 }
+
+

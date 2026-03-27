@@ -38,7 +38,7 @@ export async function listProducts(req: Request, res: Response) {
 export async function getProduct(req: Request, res: Response) {
   const product = await prisma.product.findUnique({ where: { id: req.params.id } });
   if (!product) {
-    return res.status(404).json({ message: "Produto não encontrado." });
+    return res.status(404).json({ message: "Produto nao encontrado." });
   }
   return res.json(product);
 }
@@ -46,13 +46,13 @@ export async function getProduct(req: Request, res: Response) {
 export async function createProduct(req: Request, res: Response) {
   const parse = productSchema.safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ message: "Dados inválidos para produto." });
+    return res.status(400).json({ message: "Dados invalidos para produto." });
   }
 
   if (parse.data.sku) {
     const existing = await prisma.product.findUnique({ where: { sku: parse.data.sku } });
     if (existing) {
-      return res.status(409).json({ message: "SKU já existe." });
+      return res.status(409).json({ message: "SKU ja existe." });
     }
   }
 
@@ -83,12 +83,12 @@ export async function createProduct(req: Request, res: Response) {
 export async function updateProduct(req: Request, res: Response) {
   const parse = productSchema.partial().safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ message: "Dados inválidos para atualização." });
+    return res.status(400).json({ message: "Dados invalidos para atualizacao." });
   }
 
   const existing = await prisma.product.findUnique({ where: { id: req.params.id } });
   if (!existing) {
-    return res.status(404).json({ message: "Produto não encontrado." });
+    return res.status(404).json({ message: "Produto nao encontrado." });
   }
 
   const nextStock = parse.data.stockQty;
@@ -111,7 +111,7 @@ export async function updateProduct(req: Request, res: Response) {
         userId: req.user!.id,
         type: "ADJUSTMENT",
         quantity: diff,
-        note: "Ajuste por edição de produto",
+        note: "Ajuste por edicao de produto",
       },
     });
   }
@@ -124,11 +124,13 @@ export async function deleteProduct(req: Request, res: Response) {
 
   const existing = await prisma.product.findUnique({ where: { id } });
   if (!existing) {
-    return res.status(404).json({ message: "Produto não encontrado." });
+    return res.status(404).json({ message: "Produto nao encontrado." });
   }
 
   await prisma.product.delete({ where: { id } });
   return res.status(204).send();
 }
+
+
 
 

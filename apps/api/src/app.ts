@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import cors from "cors";
 import path from "node:path";
 import { config } from "./config.js";
@@ -30,4 +30,6 @@ app.use("/stock", stockRoutes);
 app.use("/", dashboardRoutes);
 
 app.use(errorHandler);
+
+
 

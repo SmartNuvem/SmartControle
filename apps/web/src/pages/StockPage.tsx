@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+ï»¿import { FormEvent, useEffect, useState } from "react";
 import { api } from "../services/api";
 import type { Movement, Product } from "../types";
 import { dateTime } from "../lib/format";
@@ -39,7 +39,7 @@ export function StockPage() {
       setEntryQty(1);
       await loadData();
     } catch {
-      error("Não foi possível registrar entrada.");
+      error("nao foi possivel registrar entrada.");
     }
   }
 
@@ -50,13 +50,13 @@ export function StockPage() {
       success("Ajuste registrado.");
       await loadData();
     } catch {
-      error("Não foi possível ajustar estoque.");
+      error("nao foi possivel ajustar estoque.");
     }
   }
 
   return (
     <div className="space-y-4 pb-16 md:pb-0">
-      <h2 className="text-2xl font-bold">Estoque e movimentações</h2>
+      <h2 className="text-2xl font-bold">Estoque e movimentacoes</h2>
 
       <div className="grid gap-4 lg:grid-cols-2">
         <form onSubmit={submitEntry} className="rounded-xl border border-slate-200 p-4">
@@ -86,7 +86,7 @@ export function StockPage() {
         {movements.map((move) => (
           <div key={move.id} className="rounded-xl border border-slate-200 p-3">
             <p className="font-semibold">{move.product.name}</p>
-            <p className="text-sm text-slate-600">{move.type} • Qtd: {move.quantity} • {move.user.name}</p>
+            <p className="text-sm text-slate-600">{move.type}  -  Qtd: {move.quantity}  -  {move.user.name}</p>
             <p className="text-xs text-slate-500">{dateTime(move.createdAt)}</p>
           </div>
         ))}
@@ -94,3 +94,5 @@ export function StockPage() {
     </div>
   );
 }
+
+

@@ -1,4 +1,4 @@
-import { useState } from "react";
+ï»¿import { useState } from "react";
 import { api } from "../services/api";
 import { dateTime, money } from "../lib/format";
 
@@ -44,7 +44,7 @@ export function ReportsPage() {
 
   return (
     <div className="space-y-4 pb-16 md:pb-0">
-      <h2 className="text-2xl font-bold">Relatórios</h2>
+      <h2 className="text-2xl font-bold">Relatorios</h2>
 
       <div className="grid gap-2 rounded-xl border border-slate-200 p-4 md:grid-cols-4">
         <input type="date" className="rounded-lg border px-3 py-2" value={from} onChange={(e) => setFrom(e.target.value)} />
@@ -54,11 +54,11 @@ export function ReportsPage() {
       </div>
 
       <section className="rounded-xl border border-slate-200 p-4">
-        <h3 className="mb-2 font-semibold">Vendas por período</h3>
+        <h3 className="mb-2 font-semibold">Vendas por periodo</h3>
         <div className="space-y-2">
           {sales.map((sale) => (
             <div key={sale.id} className="rounded-lg bg-slate-50 p-3 text-sm">
-              {dateTime(sale.createdAt)} • {sale.seller.name} • {sale.product.name} • {sale.quantity} un • {money(sale.totalPrice)}
+              {dateTime(sale.createdAt)}  -  {sale.seller.name}  -  {sale.product.name}  -  {sale.quantity} un  -  {money(sale.totalPrice)}
             </div>
           ))}
         </div>
@@ -69,18 +69,18 @@ export function ReportsPage() {
         <div className="space-y-2">
           {stock.filter((item) => item.stockQty <= 10).map((item) => (
             <div key={item.id} className="rounded-lg bg-rose-50 p-3 text-sm text-rose-700">
-              {item.name} • Estoque: {item.stockQty}
+              {item.name}  -  Estoque: {item.stockQty}
             </div>
           ))}
         </div>
       </section>
 
       <section className="rounded-xl border border-slate-200 p-4">
-        <h3 className="mb-2 font-semibold">Movimentações de estoque</h3>
+        <h3 className="mb-2 font-semibold">movimentacoes de estoque</h3>
         <div className="space-y-2">
           {moves.slice(0, 20).map((move) => (
             <div key={move.id} className="rounded-lg bg-slate-50 p-3 text-sm">
-              {dateTime(move.createdAt)} • {move.type} • {move.product.name} • Qtd: {move.quantity} • {move.user.name}
+              {dateTime(move.createdAt)}  -  {move.type}  -  {move.product.name}  -  Qtd: {move.quantity}  -  {move.user.name}
             </div>
           ))}
         </div>
@@ -88,3 +88,5 @@ export function ReportsPage() {
     </div>
   );
 }
+
+

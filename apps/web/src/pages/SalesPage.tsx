@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+ï»¿import { FormEvent, useEffect, useState } from "react";
 import { api, assetUrl } from "../services/api";
 import type { Product } from "../types";
 import { money } from "../lib/format";
@@ -28,7 +28,7 @@ export function SalesPage() {
       const response = await api.get("/products", { params: { active: true } });
       setProducts(response.data);
     } catch (e: any) {
-      error(e?.response?.data?.message || "Não foi possível concluir a venda.");
+      error(e?.response?.data?.message || "nao foi possivel concluir a venda.");
     }
   }
 
@@ -72,9 +72,9 @@ export function SalesPage() {
                 )}
               </div>
               <p className="text-lg font-bold">{selected.name}</p>
-              <p className="text-brand-700">Preço: {money(selected.salePrice)}</p>
+              <p className="text-brand-700">Preco: {money(selected.salePrice)}</p>
               <p className={`font-semibold ${selected.stockQty <= 10 ? "text-rose-600" : "text-emerald-700"}`}>
-                Disponível: {selected.stockQty}
+                Disponivel: {selected.stockQty}
               </p>
             </>
           ) : (
@@ -85,3 +85,5 @@ export function SalesPage() {
     </div>
   );
 }
+
+

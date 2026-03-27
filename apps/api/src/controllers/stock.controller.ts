@@ -17,14 +17,14 @@ const adjustSchema = z.object({
 export async function stockEntry(req: Request, res: Response) {
   const parse = movementSchema.safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ message: "Dados inválidos para entrada de estoque." });
+    return res.status(400).json({ message: "Dados invalidos para entrada de estoque." });
   }
 
   const { productId, quantity, note } = parse.data;
 
   const product = await prisma.product.findUnique({ where: { id: productId } });
   if (!product) {
-    return res.status(404).json({ message: "Produto não encontrado." });
+    return res.status(404).json({ message: "Produto nao encontrado." });
   }
 
   await prisma.$transaction(async (tx) => {
@@ -50,14 +50,14 @@ export async function stockEntry(req: Request, res: Response) {
 export async function stockAdjustment(req: Request, res: Response) {
   const parse = adjustSchema.safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ message: "Dados inválidos para ajuste de estoque." });
+    return res.status(400).json({ message: "Dados invalidos para ajuste de estoque." });
   }
 
   const { productId, newQuantity, note } = parse.data;
   const product = await prisma.product.findUnique({ where: { id: productId } });
 
   if (!product) {
-    return res.status(404).json({ message: "Produto não encontrado." });
+    return res.status(404).json({ message: "Produto nao encontrado." });
   }
 
   const diff = newQuantity - product.stockQty;
@@ -93,5 +93,7 @@ export async function listMovements(_req: Request, res: Response) {
 
   return res.json(movements);
 }
+
+
 
 

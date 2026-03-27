@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+﻿import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "../services/api";
 import type { User } from "../types";
 
@@ -65,3 +65,5 @@ export function useAuth() {
   if (!context) throw new Error("useAuth deve ser usado dentro de AuthProvider");
   return context;
 }
+
+

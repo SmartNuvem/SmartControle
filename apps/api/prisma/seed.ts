@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+ï»¿import bcrypt from "bcryptjs";
 import { PrismaClient, Role } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -45,31 +45,31 @@ async function main() {
 
   const products = [
     {
-      name: "Camiseta Básica",
+      name: "Camiseta Basica",
       category: "Roupas",
       sku: "CAM-001",
       salePrice: 49.9,
       costPrice: 25,
       stockQty: 80,
-      description: "Camiseta confortável para uso diário",
+      description: "Camiseta confortavel para uso diario",
     },
     {
-      name: "Boné Preto",
-      category: "Acessórios",
+      name: "Bone Preto",
+      category: "Acessorios",
       sku: "BON-001",
       salePrice: 39.9,
       costPrice: 18,
       stockQty: 45,
-      description: "Boné ajustável com tecido respirável",
+      description: "Bone ajustavel com tecido respiravel",
     },
     {
-      name: "Garrafa Térmica",
+      name: "Garrafa Termica",
       category: "Utilidades",
       sku: "GAR-001",
       salePrice: 89.9,
       costPrice: 46,
       stockQty: 20,
-      description: "Mantém bebidas geladas ou quentes por horas",
+      description: "Mantem bebidas geladas ou quentes por horas",
     },
   ];
 
@@ -113,7 +113,7 @@ async function main() {
     }
   }
 
-  console.log("Seed concluído com sucesso.");
+  console.log("Seed concluido com sucesso.");
 }
 
 main()
@@ -124,3 +124,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+

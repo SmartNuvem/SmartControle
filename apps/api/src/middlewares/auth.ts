@@ -7,13 +7,13 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ message: "Token não informado." });
+    return res.status(401).json({ message: "Token nao informado." });
   }
 
   const [scheme, token] = authHeader.split(" ");
 
   if (scheme !== "Bearer" || !token) {
-    return res.status(401).json({ message: "Token inválido." });
+    return res.status(401).json({ message: "Token invalido." });
   }
 
   try {
@@ -21,7 +21,7 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     const user = await prisma.user.findUnique({ where: { id: payload.sub } });
 
     if (!user || !user.active) {
-      return res.status(401).json({ message: "Usuário inválido ou inativo." });
+      return res.status(401).json({ message: "Usuario invalido ou inativo." });
     }
 
     req.user = {
@@ -33,8 +33,10 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
 
     next();
   } catch {
-    return res.status(401).json({ message: "Sessão expirada. Faça login novamente." });
+    return res.status(401).json({ message: "Sessao expirada. Faca login novamente." });
   }
 }
+
+
 
 

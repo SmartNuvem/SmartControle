@@ -1,4 +1,4 @@
-import { Router } from "express";
+﻿import { Router } from "express";
 import { createUser, deleteUser, listUsers, updateUser } from "../controllers/user.controller.js";
 import { authMiddleware } from "../middlewares/auth.js";
 import { requireRole } from "../middlewares/roles.js";
@@ -10,4 +10,6 @@ userRoutes.get("/", listUsers);
 userRoutes.post("/", createUser);
 userRoutes.put("/:id", updateUser);
 userRoutes.delete("/:id", deleteUser);
+
+
 

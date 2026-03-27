@@ -1,22 +1,22 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+ï»¿import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 const adminItems = [
   { to: "/", label: "Dashboard" },
   { to: "/produtos", label: "Produtos" },
   { to: "/vendas", label: "Vendas" },
-  { to: "/historico", label: "Histórico" },
+  { to: "/historico", label: "Historico" },
   { to: "/estoque", label: "Estoque" },
-  { to: "/usuarios", label: "Usuários" },
-  { to: "/relatorios", label: "Relatórios" },
+  { to: "/usuarios", label: "Usuarios" },
+  { to: "/relatorios", label: "Relatorios" },
 ];
 
 const sellerItems = [
   { to: "/", label: "Dashboard" },
   { to: "/produtos", label: "Produtos" },
   { to: "/vendas", label: "Vendas" },
-  { to: "/historico", label: "Histórico" },
-  { to: "/relatorios", label: "Relatórios" },
+  { to: "/historico", label: "Historico" },
+  { to: "/relatorios", label: "Relatorios" },
 ];
 
 function linkClass({ isActive }: { isActive: boolean }) {
@@ -40,7 +40,7 @@ export function AppLayout() {
       <div className="mx-auto flex max-w-7xl gap-4 px-3 py-4 md:px-6">
         <aside className="hidden w-64 shrink-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-card md:block">
           <h1 className="text-2xl font-bold text-brand-700">SmartControle</h1>
-          <p className="mt-1 text-sm text-slate-500">Olá, {user?.name}</p>
+          <p className="mt-1 text-sm text-slate-500">Ola, {user?.name}</p>
           <nav className="mt-6 flex flex-col gap-2">
             {items.map((item) => (
               <NavLink key={item.to} to={item.to} className={linkClass} end={item.to === "/"}>
@@ -88,3 +88,5 @@ export function AppLayout() {
     </div>
   );
 }
+
+

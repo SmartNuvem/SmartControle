@@ -1,4 +1,4 @@
-export function money(value: number) {
+﻿export function money(value: number) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
 
@@ -7,3 +7,5 @@ export function dateTime(value: string) {
     timeZone: "America/Sao_Paulo",
   });
 }
+
+

@@ -10,7 +10,7 @@ const saleSchema = z.object({
 export async function createSale(req: Request, res: Response) {
   const parse = saleSchema.safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ message: "Dados inválidos para venda." });
+    return res.status(400).json({ message: "Dados invalidos para venda." });
   }
 
   const { productId, quantity } = parse.data;
@@ -18,8 +18,8 @@ export async function createSale(req: Request, res: Response) {
   try {
     const sale = await prisma.$transaction(async (tx) => {
       const product = await tx.product.findUnique({ where: { id: productId } });
-      if (!product) throw new Error("Produto não encontrado.");
-      if (!product.active) throw new Error("Produto inativo não pode ser vendido.");
+      if (!product) throw new Error("Produto nao encontrado.");
+      if (!product.active) throw new Error("Produto inativo nao pode ser vendido.");
 
       const updated = await tx.product.updateMany({
         where: {
@@ -96,5 +96,7 @@ export async function listSales(req: Request, res: Response) {
 
   return res.json(sales);
 }
+
+
 
 

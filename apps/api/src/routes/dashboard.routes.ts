@@ -1,4 +1,4 @@
-import { Router } from "express";
+﻿import { Router } from "express";
 import {
   getDashboard,
   movementReport,
@@ -14,4 +14,6 @@ dashboardRoutes.get("/dashboard", getDashboard);
 dashboardRoutes.get("/reports/sales", salesReport);
 dashboardRoutes.get("/reports/stock", stockReport);
 dashboardRoutes.get("/reports/movements", movementReport);
+
+
 

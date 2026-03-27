@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+ï»¿import { FormEvent, useEffect, useMemo, useState } from "react";
 import { api, assetUrl } from "../services/api";
 import type { Product } from "../types";
 import { money } from "../lib/format";
@@ -99,7 +99,7 @@ export function ProductsPage() {
       setShowForm(false);
       await loadProducts();
     } catch {
-      error("Não foi possível salvar o produto.");
+      error("nao foi possivel salvar o produto.");
     }
   }
 
@@ -107,10 +107,10 @@ export function ProductsPage() {
     if (!window.confirm("Deseja realmente excluir este produto?")) return;
     try {
       await api.delete(`/products/${id}`);
-      success("Produto excluído com sucesso.");
+      success("Produto excluido com sucesso.");
       await loadProducts();
     } catch {
-      error("Não foi possível excluir o produto.");
+      error("nao foi possivel excluir o produto.");
     }
   }
 
@@ -195,11 +195,11 @@ export function ProductsPage() {
             <h3 className="text-xl font-bold">{editing ? "Editar produto" : "Novo produto"}</h3>
             <div className="mt-3 grid gap-2">
               <input className="rounded-lg border px-3 py-2" placeholder="Nome" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
-              <input className="rounded-lg border px-3 py-2" placeholder="Descrição" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+              <input className="rounded-lg border px-3 py-2" placeholder="Descricao" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
               <input className="rounded-lg border px-3 py-2" placeholder="Categoria" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
               <input className="rounded-lg border px-3 py-2" placeholder="SKU" value={form.sku} onChange={(e) => setForm({ ...form, sku: e.target.value })} />
-              <input type="number" step="0.01" min="0" className="rounded-lg border px-3 py-2" placeholder="Preço de custo" value={form.costPrice} onChange={(e) => setForm({ ...form, costPrice: e.target.value })} />
-              <input type="number" step="0.01" min="0" className="rounded-lg border px-3 py-2" placeholder="Preço de venda" value={form.salePrice} onChange={(e) => setForm({ ...form, salePrice: e.target.value })} required />
+              <input type="number" step="0.01" min="0" className="rounded-lg border px-3 py-2" placeholder="Preco de custo" value={form.costPrice} onChange={(e) => setForm({ ...form, costPrice: e.target.value })} />
+              <input type="number" step="0.01" min="0" className="rounded-lg border px-3 py-2" placeholder="Preco de venda" value={form.salePrice} onChange={(e) => setForm({ ...form, salePrice: e.target.value })} required />
               <input type="number" min="0" className="rounded-lg border px-3 py-2" placeholder="Estoque" value={form.stockQty} onChange={(e) => setForm({ ...form, stockQty: e.target.value })} required />
               <label className="text-sm font-semibold">Foto do produto</label>
               <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} />
@@ -219,3 +219,5 @@ export function ProductsPage() {
     </div>
   );
 }
+
+

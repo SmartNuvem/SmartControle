@@ -1,4 +1,4 @@
-export type Role = "ADMIN" | "SELLER";
+﻿export type Role = "ADMIN" | "SELLER";
 
 export type User = {
   id: string;
@@ -41,3 +41,5 @@ export type Movement = {
   product: { id: string; name: string };
   user: { id: string; name: string; username: string };
 };
+
+

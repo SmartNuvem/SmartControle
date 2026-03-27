@@ -1,4 +1,4 @@
-import { Router } from "express";
+﻿import { Router } from "express";
 import {
   createProduct,
   deleteProduct,
@@ -18,4 +18,6 @@ productRoutes.get("/:id", getProduct);
 productRoutes.post("/", requireRole("ADMIN"), upload.single("image"), createProduct);
 productRoutes.put("/:id", requireRole("ADMIN"), upload.single("image"), updateProduct);
 productRoutes.delete("/:id", requireRole("ADMIN"), deleteProduct);
+
+
 

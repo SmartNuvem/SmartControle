@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+﻿import { createContext, useContext, useMemo, useState } from "react";
 
 type Toast = { id: number; type: "success" | "error"; message: string };
 
@@ -49,3 +49,5 @@ export function useToast() {
   if (!context) throw new Error("useToast deve ser usado dentro de ToastProvider");
   return context;
 }
+
+

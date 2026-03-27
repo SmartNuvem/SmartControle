@@ -31,12 +31,12 @@ export async function listUsers(_req: Request, res: Response) {
 export async function createUser(req: Request, res: Response) {
   const parse = userSchema.safeParse(req.body);
   if (!parse.success || !parse.data.password) {
-    return res.status(400).json({ message: "Dados inválidos. Senha é obrigatória." });
+    return res.status(400).json({ message: "Dados invalidos. Senha e obrigatoria." });
   }
 
   const existing = await prisma.user.findUnique({ where: { username: parse.data.username } });
   if (existing) {
-    return res.status(409).json({ message: "Usuário já cadastrado." });
+    return res.status(409).json({ message: "Usuario ja cadastrado." });
   }
 
   const password = await bcrypt.hash(parse.data.password, 10);
@@ -65,14 +65,14 @@ export async function createUser(req: Request, res: Response) {
 export async function updateUser(req: Request, res: Response) {
   const parse = userSchema.partial().safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ message: "Dados inválidos para atualizar usuário." });
+    return res.status(400).json({ message: "Dados invalidos para atualizar Usuario." });
   }
 
   const { id } = req.params;
 
   const current = await prisma.user.findUnique({ where: { id } });
   if (!current) {
-    return res.status(404).json({ message: "Usuário não encontrado." });
+    return res.status(404).json({ message: "Usuario nao encontrado." });
   }
 
   const data: {
@@ -113,11 +113,13 @@ export async function deleteUser(req: Request, res: Response) {
 
   const user = await prisma.user.findUnique({ where: { id } });
   if (!user) {
-    return res.status(404).json({ message: "Usuário não encontrado." });
+    return res.status(404).json({ message: "Usuario nao encontrado." });
   }
 
   await prisma.user.delete({ where: { id } });
   return res.status(204).send();
 }
+
+
 
 
