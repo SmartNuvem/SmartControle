@@ -1,6 +1,7 @@
 ﻿import { FormEvent, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useToast } from "../contexts/ToastContext";
+import { useRealtime } from "../contexts/RealtimeContext";
 
 type UserItem = {
   id: string;
@@ -20,6 +21,7 @@ const initialUser = {
 
 export function UsersPage() {
   const { success, error } = useToast();
+  const { version } = useRealtime();
   const [users, setUsers] = useState<UserItem[]>([]);
   const [form, setForm] = useState(initialUser);
 
@@ -30,7 +32,7 @@ export function UsersPage() {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [version]);
 
   async function submitUser(event: FormEvent) {
     event.preventDefault();
@@ -101,5 +103,7 @@ export function UsersPage() {
     </div>
   );
 }
+
+
 
 

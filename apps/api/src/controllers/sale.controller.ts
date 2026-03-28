@@ -1,6 +1,7 @@
 ﻿import type { Request, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../prisma.js";
+import { publishEvent } from "../realtime.js";
 
 const saleSchema = z.object({
   productId: z.string().min(1),
@@ -68,6 +69,10 @@ export async function createSale(req: Request, res: Response) {
 
       return createdSale;
     });
+
+    publishEvent("sale_changed");
+    publishEvent("product_changed");
+    publishEvent("stock_changed");
 
     return res.status(201).json({
       ...sale,

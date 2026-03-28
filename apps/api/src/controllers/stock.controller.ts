@@ -1,6 +1,7 @@
 ﻿import type { Request, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../prisma.js";
+import { publishEvent } from "../realtime.js";
 
 const movementSchema = z.object({
   productId: z.string().min(1),
@@ -45,6 +46,8 @@ export async function stockEntry(req: Request, res: Response) {
     });
   });
 
+  publishEvent("stock_changed");
+  publishEvent("product_changed");
   return res.status(201).json({ message: "Entrada registrada com sucesso." });
 }
 
@@ -81,6 +84,8 @@ export async function stockAdjustment(req: Request, res: Response) {
     });
   });
 
+  publishEvent("stock_changed");
+  publishEvent("product_changed");
   return res.status(201).json({ message: "Ajuste registrado com sucesso." });
 }
 

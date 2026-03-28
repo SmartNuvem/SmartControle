@@ -3,6 +3,7 @@ import { api, assetUrl } from "../services/api";
 import type { Product } from "../types";
 import { money } from "../lib/format";
 import { useAuth } from "../contexts/AuthContext";
+import { useRealtime } from "../contexts/RealtimeContext";
 import { useToast } from "../contexts/ToastContext";
 
 const initialForm = {
@@ -19,6 +20,7 @@ const initialForm = {
 export function ProductsPage() {
   const { user } = useAuth();
   const { success, error } = useToast();
+  const { version } = useRealtime();
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
@@ -45,7 +47,7 @@ export function ProductsPage() {
 
   useEffect(() => {
     loadProducts();
-  }, [query, category, active, sortBy, order]);
+  }, [query, category, active, sortBy, order, version]);
 
   const categories = useMemo(
     () => Array.from(new Set(products.map((item) => item.category).filter(Boolean))) as string[],
@@ -219,5 +221,7 @@ export function ProductsPage() {
     </div>
   );
 }
+
+
 
 

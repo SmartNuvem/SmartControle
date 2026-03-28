@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { prisma } from "../prisma.js";
 import { parseBool } from "../utils/helpers.js";
+import { publishEvent } from "../realtime.js";
 
 const productSchema = z.object({
   name: z.string().min(2),
@@ -78,6 +79,7 @@ export async function createProduct(req: Request, res: Response) {
     });
   }
 
+  publishEvent("product_changed");
   return res.status(201).json(product);
 }
 
@@ -118,6 +120,7 @@ export async function updateProduct(req: Request, res: Response) {
     });
   }
 
+  publishEvent("product_changed");
   return res.json(product);
 }
 
@@ -131,6 +134,7 @@ export async function deleteProduct(req: Request, res: Response) {
 
   try {
     await prisma.product.delete({ where: { id } });
+    publishEvent("product_changed");
     return res.status(204).send();
   } catch (error) {
     return res.status(400).json({

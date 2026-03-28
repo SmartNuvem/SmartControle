@@ -2,13 +2,15 @@
 import { api } from "../services/api";
 import type { Sale } from "../types";
 import { dateTime, money } from "../lib/format";
+import { useRealtime } from "../contexts/RealtimeContext";
 
 export function SalesHistoryPage() {
   const [sales, setSales] = useState<Sale[]>([]);
+  const { version } = useRealtime();
 
   useEffect(() => {
     api.get("/sales").then((response) => setSales(response.data));
-  }, []);
+  }, [version]);
 
   return (
     <div className="space-y-4 pb-16 md:pb-0">
@@ -54,5 +56,7 @@ export function SalesHistoryPage() {
     </div>
   );
 }
+
+
 
 

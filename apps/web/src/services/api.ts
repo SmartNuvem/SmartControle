@@ -1,9 +1,9 @@
 ﻿import axios from "axios";
 
-const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3333";
+export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3333";
 
 export const api = axios.create({
-  baseURL: apiUrl,
+  baseURL: API_URL,
 });
 
 api.interceptors.request.use((config) => {
@@ -16,7 +16,6 @@ api.interceptors.request.use((config) => {
 
 export function assetUrl(path?: string | null) {
   if (!path) return "";
-  return `${apiUrl}${path}`;
+  return `${API_URL}${path}`;
 }
-
 

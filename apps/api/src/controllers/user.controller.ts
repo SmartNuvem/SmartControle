@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { Role } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "../prisma.js";
+import { publishEvent } from "../realtime.js";
 
 const userSchema = z.object({
   name: z.string().min(2),
@@ -59,6 +60,7 @@ export async function createUser(req: Request, res: Response) {
     },
   });
 
+  publishEvent("user_changed");
   return res.status(201).json(user);
 }
 
@@ -105,6 +107,7 @@ export async function updateUser(req: Request, res: Response) {
     },
   });
 
+  publishEvent("user_changed");
   return res.json(user);
 }
 
@@ -117,9 +120,6 @@ export async function deleteUser(req: Request, res: Response) {
   }
 
   await prisma.user.delete({ where: { id } });
+  publishEvent("user_changed");
   return res.status(204).send();
 }
-
-
-
-

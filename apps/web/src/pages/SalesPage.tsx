@@ -3,9 +3,11 @@ import { api, assetUrl } from "../services/api";
 import type { Product } from "../types";
 import { money } from "../lib/format";
 import { useToast } from "../contexts/ToastContext";
+import { useRealtime } from "../contexts/RealtimeContext";
 
 export function SalesPage() {
   const { success, error } = useToast();
+  const { version } = useRealtime();
   const [products, setProducts] = useState<Product[]>([]);
   const [productId, setProductId] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -15,7 +17,7 @@ export function SalesPage() {
       setProducts(response.data);
       if (response.data[0]) setProductId(response.data[0].id);
     });
-  }, []);
+  }, [version]);
 
   const selected = products.find((item) => item.id === productId);
 
@@ -85,5 +87,7 @@ export function SalesPage() {
     </div>
   );
 }
+
+
 
 

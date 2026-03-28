@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from "react";
+import { useRealtime } from "../contexts/RealtimeContext";
 import { api } from "../services/api";
 import { money, dateTime } from "../lib/format";
 
@@ -14,10 +15,11 @@ type DashboardData = {
 
 export function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
+  const { version } = useRealtime();
 
   useEffect(() => {
     api.get("/dashboard").then((response) => setData(response.data));
-  }, []);
+  }, [version]);
 
   if (!data) return <p>Carregando dashboard...</p>;
 
@@ -76,5 +78,7 @@ function Card({ title, value }: { title: string; value: string }) {
     </div>
   );
 }
+
+
 
 

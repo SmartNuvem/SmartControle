@@ -3,9 +3,11 @@ import { api } from "../services/api";
 import type { Movement, Product } from "../types";
 import { dateTime } from "../lib/format";
 import { useToast } from "../contexts/ToastContext";
+import { useRealtime } from "../contexts/RealtimeContext";
 
 export function StockPage() {
   const { success, error } = useToast();
+  const { version } = useRealtime();
   const [products, setProducts] = useState<Product[]>([]);
   const [movements, setMovements] = useState<Movement[]>([]);
   const [productId, setProductId] = useState("");
@@ -24,7 +26,7 @@ export function StockPage() {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [version]);
 
   useEffect(() => {
     const current = products.find((item) => item.id === productId);
@@ -94,5 +96,7 @@ export function StockPage() {
     </div>
   );
 }
+
+
 
 

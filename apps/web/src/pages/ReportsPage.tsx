@@ -1,8 +1,10 @@
-﻿import { useState } from "react";
-import { api } from "../services/api";
+﻿import { useEffect, useState } from "react";
+import { api, API_URL } from "../services/api";
 import { dateTime, money } from "../lib/format";
+import { useRealtime } from "../contexts/RealtimeContext";
 
 export function ReportsPage() {
+  const { version } = useRealtime();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [sales, setSales] = useState<any[]>([]);
@@ -20,15 +22,20 @@ export function ReportsPage() {
     setMoves(moveRes.data);
   }
 
+  useEffect(() => {
+    if (sales.length || stock.length || moves.length) {
+      loadReports();
+    }
+  }, [version]);
+
   function exportCsv() {
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3333";
     const token = localStorage.getItem("smartcontrole_token");
     const params = new URLSearchParams();
     if (from) params.set("from", from);
     if (to) params.set("to", to);
     params.set("format", "csv");
 
-    fetch(`${baseUrl}/reports/sales?${params.toString()}`, {
+    fetch(`${API_URL}/reports/sales?${params.toString()}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.blob())
@@ -88,5 +95,3 @@ export function ReportsPage() {
     </div>
   );
 }
-
-
