@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { prisma } from "../prisma.js";
 import { config } from "../config.js";
+import { normalizeUsername } from "../utils/normalizeUsername.js";
 
 const loginSchema = z.object({
   username: z.string().min(1),
@@ -17,7 +18,8 @@ export async function login(req: Request, res: Response) {
     return res.status(400).json({ message: "Informe Usuario e senha." });
   }
 
-  const { username, password } = parse.data;
+  const username = normalizeUsername(parse.data.username);
+  const { password } = parse.data;
 
   const user = await prisma.user.findUnique({ where: { username } });
   if (!user || !user.active) {

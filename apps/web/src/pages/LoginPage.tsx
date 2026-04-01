@@ -15,7 +15,7 @@ export function LoginPage() {
     event.preventDefault();
     setLoading(true);
     try {
-      await login(username, password);
+      await login(username.trim(), password);
       navigate("/", { replace: true });
     } catch {
       error("Falha no login. Verifique Usuario e senha.");
@@ -37,6 +37,7 @@ export function LoginPage() {
               className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-brand-500 focus:outline-none"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              autoComplete="username"
               required
             />
           </div>
@@ -48,6 +49,7 @@ export function LoginPage() {
               className="w-full rounded-lg border border-slate-300 px-3 py-3 text-base focus:border-brand-500 focus:outline-none"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
               required
             />
           </div>

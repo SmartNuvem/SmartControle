@@ -48,7 +48,10 @@ export function UsersPage() {
   async function submitUser(event: FormEvent) {
     event.preventDefault();
     try {
-      await api.post("/users", form);
+      await api.post("/users", {
+        ...form,
+        username: form.username.trim(),
+      });
       success("Usuario criado com sucesso.");
       setForm(initialUser);
       await loadUsers();
@@ -74,7 +77,7 @@ export function UsersPage() {
 
     const payload: Record<string, unknown> = {
       name: editForm.name,
-      username: editForm.username,
+      username: editForm.username.trim(),
       role: editForm.role,
       active: editForm.active,
     };

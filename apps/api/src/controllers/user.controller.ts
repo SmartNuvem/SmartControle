@@ -4,6 +4,7 @@ import { Role } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "../prisma.js";
 import { publishEvent } from "../realtime.js";
+import { normalizeUsername } from "../utils/normalizeUsername.js";
 
 const userSchema = z.object({
   name: z.string().min(2),
@@ -35,7 +36,16 @@ export async function createUser(req: Request, res: Response) {
     return res.status(400).json({ message: "Dados invalidos. Senha e obrigatoria." });
   }
 
-  const existing = await prisma.user.findUnique({ where: { username: parse.data.username } });
+  const username = normalizeUsername(parse.data.username);
+
+  const existing = await prisma.user.findFirst({
+    where: {
+      username: {
+        equals: username,
+        mode: "insensitive",
+      },
+    },
+  });
   if (existing) {
     return res.status(409).json({ message: "Usuario ja cadastrado." });
   }
@@ -45,7 +55,7 @@ export async function createUser(req: Request, res: Response) {
   const user = await prisma.user.create({
     data: {
       name: parse.data.name,
-      username: parse.data.username,
+      username,
       password,
       role: parse.data.role,
       active: parse.data.active ?? true,
@@ -85,10 +95,28 @@ export async function updateUser(req: Request, res: Response) {
     active?: boolean;
   } = {
     name: parse.data.name,
-    username: parse.data.username,
     role: parse.data.role,
     active: parse.data.active,
   };
+
+  if (parse.data.username) {
+    const normalizedUsername = normalizeUsername(parse.data.username);
+    const existing = await prisma.user.findFirst({
+      where: {
+        id: { not: id },
+        username: {
+          equals: normalizedUsername,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    if (existing) {
+      return res.status(409).json({ message: "Usuario ja cadastrado." });
+    }
+
+    data.username = normalizedUsername;
+  }
 
   if (parse.data.password) {
     data.password = await bcrypt.hash(parse.data.password, 10);
